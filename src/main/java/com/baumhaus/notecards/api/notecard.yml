@@ -1,0 +1,82 @@
+swagger: "2.0"
+info:
+  description: "Note card API"
+  version: "1.0.0"
+  title: "Note cards"
+basePath: "/"
+schemes:
+  - "http"
+paths:
+  /needs/cards:
+    get:
+      summary: "Retrieve note cards in which person has a need"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Successful Response"
+          schema:
+            $ref: "#/definitions/DisplayCardResponse"
+        404:
+          description: "Client Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /offer/cards:
+    get:
+      summary: "Retrieve note cards in which person has an offer to make"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Successful Response"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/DisplayCardResponse"
+        404:
+          description: "Client Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+definitions:
+  ErrorResponse:
+    type: "object"
+    properties:
+      code:
+        description: "Response code"
+        type: number
+      message:
+        description: "Error message"
+        type: "string"
+  DisplayCardResponse:
+    type: "object"
+    properties:
+      displayCards:
+        description: "List of cards to display"
+        type: array
+        items:
+          $ref: "#/definitions/DisplayCard"
+  DisplayCard:
+    type: "object"
+    properties:
+      firstName:
+        description: "First name of person posting card"
+        type: "string"
+      photoLink:
+        description: "Link to hosted image associated with note card"
+        type: "string"
+      title:
+        description: "Title of note card"
+        type: "string"
+      description:
+        description: "Description associated with the note card"
+        type: "string"
+      type:
+        description: "Type of note card. This could be a need, offer, or a want to meet other"
